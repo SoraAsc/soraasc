@@ -6,7 +6,8 @@
 
  # *Statistics:*
 
-[![Ashutosh's github activity graph](https://github-readme-activity-graph.cyclic.app/graph?username=SoraAsc&bg_color=transparent&color=00CED1&line=b13583&point=ff9494&area=true&hide_border=false)](https://github.com/ashutosh00710/github-readme-activity-graph)
+![Sora Github Activity Graph](https://github-readme-activity-graph-xi.vercel.app/graph?username=SoraAsc&bg_color=transparent&color=00CED1&line=b13583&point=ff9494&area=true&hide_border=false)
+
 
 <p align="center">
   <img src="https://github-profile-trophy.vercel.app/?username=SoraAsc&theme=dracula&row=1&no-bg=true&margin-w=10&margin-h=10" />
