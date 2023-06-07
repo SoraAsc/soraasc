@@ -4,7 +4,7 @@
 
 [![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Exo+2&weight=200&size=15&duration=1000&pause=120&color=F7F7F7&vCenter=true&multiline=true&repeat=false&width=450&height=120&lines=%E2%97%8F+Hello%2C+I'm+Marcos.;%E2%97%8F+I'm+21+years+old.;%E2%97%8F+Graduated+in+IT;%E2%97%8F+Currently%2C+I'm+studying+Computer+Science+at+UENF.)](https://git.io/typing-svg)
 
- # *Statistics:*
+ # *Statistics*
 
 ![Sora Github Activity Graph](https://github-readme-activity-graph-xi.vercel.app/graph?username=SoraAsc&bg_color=transparent&color=00CED1&line=b13583&point=ff9494&area=true&hide_border=false)
 
