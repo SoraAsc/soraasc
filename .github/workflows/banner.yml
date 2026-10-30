@@ -1,0 +1,33 @@
+name: Update banners
+
+on:
+  schedule:
+    - cron: "17 6 * * 1"        # every Monday
+  workflow_dispatch:
+  push:
+    paths:
+      - "banner/src/**"
+
+permissions:
+  contents: write
+
+jobs:
+  banners:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24      # runs TypeScript directly, no build step
+      - name: Render banners from the GitHub API
+        env:
+          # Optional: a classic PAT (read:user) saved as PROFILE_TOKEN also counts private contributions.
+          GITHUB_TOKEN: ${{ secrets.PROFILE_TOKEN || secrets.GITHUB_TOKEN }}
+          GH_USER: ${{ github.repository_owner }}
+        run: node banner/src/generate.ts
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/*.svg
+          git diff --cached --quiet || (git commit -m "chore: update banners" && git push)
