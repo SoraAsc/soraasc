@@ -1,0 +1,14 @@
+{
+  "name": "soraasc-profile",
+  "private": true,
+  "type": "module",
+  "description": "Generates the banners used in my GitHub profile README.",
+  "scripts": {
+    "banner": "node banner/src/generate.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0"
+  }
+}
