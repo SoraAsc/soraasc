@@ -33,12 +33,12 @@ I'm a Computer Science student at UENF, in Brazil. I like understanding how thin
 
 ### Featured work
 
-| Project | What it is | Stack | |
-|---|---|---|---|
-| [**NNW**](https://github.com/SoraAsc/NNW) | Neural network and reinforcement learning library: dense and convolutional layers, SGD/AdamW, PPO, Q-Learning, gradient-checked, with bindings for Python, C#/Unity and TypeScript/WebAssembly | C++ · CMake · WASM | ![last commit](https://img.shields.io/github/last-commit/SoraAsc/NNW?style=flat-square&labelColor=161b22&color=8b6cf7) |
-| [**Neural Playground**](https://soraasc.github.io/NeuralPlayground/) | A browser lab where agents learn to drive, balance a pendulum, and play Flappy, Pong and Asteroids. You can watch them train live | Vue · PixiJS · NNW | ![last commit](https://img.shields.io/github/last-commit/SoraAsc/NeuralPlayground?style=flat-square&labelColor=161b22&color=8b6cf7) |
-| [**NeuralSnake**](https://github.com/SoraAsc/NeuralSnake) | Classic Snake played by a Q-Learning agent, in Unity | C# · Unity | ![last commit](https://img.shields.io/github/last-commit/SoraAsc/NeuralSnake?style=flat-square&labelColor=161b22&color=8b6cf7) |
-| [**Infinitia**](https://github.com/SoraAsc/Infinitia) | Image filters implemented by hand (grayscale, thresholding, Otsu) running in the browser | Vue · TypeScript | ![last commit](https://img.shields.io/github/last-commit/SoraAsc/Infinitia?style=flat-square&labelColor=161b22&color=8b6cf7) |
+| Project | What it is | Stack | Activity |
+|---|---|---|:---:|
+| [**NNW**](https://github.com/SoraAsc/NNW) | Neural network and reinforcement learning library: dense and convolutional layers, SGD/AdamW, PPO, Q-Learning, gradient-checked, with bindings for Python, C#/Unity and TypeScript/WebAssembly | C++ · CMake · WASM | ![last commit](https://img.shields.io/github/last-commit/SoraAsc/NNW?style=for-the-badge&label=updated&labelColor=161b22&color=8b6cf7) |
+| [**Neural Playground**](https://soraasc.github.io/NeuralPlayground/) | A browser lab where agents learn to drive, balance a pendulum, and play Flappy, Pong and Asteroids. You can watch them train live | Vue · PixiJS · NNW | ![last commit](https://img.shields.io/github/last-commit/SoraAsc/NeuralPlayground?style=for-the-badge&label=updated&labelColor=161b22&color=8b6cf7) |
+| [**NeuralSnake**](https://github.com/SoraAsc/NeuralSnake) | Classic Snake played by a Q-Learning agent, in Unity | C# · Unity | ![last commit](https://img.shields.io/github/last-commit/SoraAsc/NeuralSnake?style=for-the-badge&label=updated&labelColor=161b22&color=8b6cf7) |
+| [**Infinitia**](https://github.com/SoraAsc/Infinitia) | Image filters implemented by hand (grayscale, thresholding, Otsu) running in the browser | Vue · TypeScript | ![last commit](https://img.shields.io/github/last-commit/SoraAsc/Infinitia?style=for-the-badge&label=updated&labelColor=161b22&color=8b6cf7) |
 
 More in my [repositories](https://github.com/SoraAsc?tab=repositories), including games, experiments and honest drafts.
 
