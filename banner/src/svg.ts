@@ -19,3 +19,10 @@ export function fadeMask(id: string, gradientId: string, width: number, height: 
   const maskWidth = area?.width ?? width;
   return `<mask id="${id}" maskUnits="userSpaceOnUse" x="0" y="0" width="${width}" height="${height}"><rect x="${x}" width="${maskWidth}" height="${height}" fill="url(#${gradientId})"/></mask>`;
 }
+
+/** Blends two #rrggbb colors; t=0 gives `from`, t=1 gives `to`. Used to get shades without transparency. */
+export function mixColors(from: string, to: string, t: number): string {
+  const channel = (hex: string, index: number) => parseInt(hex.slice(1 + index * 2, 3 + index * 2), 16);
+  const blended = [0, 1, 2].map((i) => Math.round(channel(from, i) + (channel(to, i) - channel(from, i)) * t));
+  return `#${blended.map((value) => value.toString(16).padStart(2, "0")).join("")}`;
+}

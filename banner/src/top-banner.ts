@@ -1,6 +1,6 @@
 import { COLORS, PROFILE } from "./config.ts";
-import { LAYER_SIZES, runForwardPass } from "./network.ts";
-import { fadeMask, fmt, MONO, SANS, svgOpen } from "./svg.ts";
+import { type Connection, LAYER_SIZES, runForwardPass } from "./network.ts";
+import { fadeMask, fmt, MONO, mixColors, SANS, svgOpen } from "./svg.ts";
 import type { ProfileData } from "./types.ts";
 
 const WIDTH = 1000;
@@ -12,7 +12,7 @@ const LAYER_X = [610, 725, 840, 940];
 const NEURON_SPACING = 34;
 
 /** A connection counts as "strong" (drawn brighter, with a travelling pulse) above this signal. */
-const STRONG_SIGNAL = 0.45;
+const STRONG_SIGNAL = 0.5;
 const PULSE_LENGTH = 135;
 
 type Point = [x: number, y: number];
@@ -32,7 +32,7 @@ export function renderTopBanner(data: ProfileData): string {
     definitions(),
     `<ellipse cx="780" cy="${CENTER_Y}" rx="280" ry="${CENTER_Y}" fill="url(#glow)"/>`,
     `<g mask="url(#fade-mask)">`,
-    ...drawConnections(network.weights, network.activations, positions, pulseSeconds),
+    ...drawConnections(network.connections, positions, pulseSeconds),
     ...drawNeurons(network.activations, positions),
     `</g>`,
     ...drawLanguageLabels(data, positions),
@@ -60,42 +60,38 @@ ${fadeMask("fade-mask", "fade", WIDTH, HEIGHT, { x: 480, width: 520 })}
 }
 
 /** One line per connection; its thickness and brightness show how much signal flows through it. */
-function drawConnections(weights: number[][][], activations: number[][], positions: Point[][], pulseSeconds: number): string[] {
+function drawConnections(connections: Connection[], positions: Point[][], pulseSeconds: number): string[] {
   const shapes: string[] = [];
   let strongCount = 0;
 
-  weights.forEach((layerWeights, layer) =>
-    layerWeights.forEach((incoming, to) =>
-      incoming.forEach((weight, from) => {
-        const signal = Math.min(1, Math.abs(weight) * activations[layer]![from]!);
-        const [x1, y1] = positions[layer]![from]!;
-        const [x2, y2] = positions[layer + 1]![to]!;
-        const line = `x1="${x1}" y1="${fmt(y1)}" x2="${x2}" y2="${fmt(y2)}"`;
+  for (const { layer, from, to, signal } of connections) {
+    const [x1, y1] = positions[layer]![from]!;
+    const [x2, y2] = positions[layer + 1]![to]!;
+    const line = `x1="${x1}" y1="${fmt(y1)}" x2="${x2}" y2="${fmt(y2)}"`;
 
-        shapes.push(
-          `<line ${line} stroke="${COLORS.accent}" stroke-width="${(0.7 + signal * 1.5).toFixed(2)}" opacity="${(0.14 + signal * 0.8).toFixed(2)}"/>`,
-        );
+    shapes.push(
+      `<line ${line} stroke="${COLORS.accent}" stroke-width="${(1 + signal * 1.5).toFixed(2)}" opacity="${(0.35 + signal * 0.6).toFixed(2)}"/>`,
+    );
 
-        if (signal > STRONG_SIGNAL) {
-          strongCount++;
-          const delay = ((strongCount % 8) * 0.35).toFixed(2);
-          shapes.push(
-            `<line ${line} stroke="${COLORS.accentLight}" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="5 130" pathLength="${PULSE_LENGTH}">` +
-              `<animate attributeName="stroke-dashoffset" from="${PULSE_LENGTH}" to="0" dur="${pulseSeconds.toFixed(2)}s" begin="${delay}s" repeatCount="indefinite"/></line>`,
-          );
-        }
-      }),
-    ),
-  );
+    if (signal > STRONG_SIGNAL) {
+      strongCount++;
+      const delay = ((strongCount % 8) * 0.35).toFixed(2);
+      shapes.push(
+        `<line ${line} stroke="${COLORS.accentLight}" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="5 130" pathLength="${PULSE_LENGTH}">` +
+          `<animate attributeName="stroke-dashoffset" from="${PULSE_LENGTH}" to="0" dur="${pulseSeconds.toFixed(2)}s" begin="${delay}s" repeatCount="indefinite"/></line>`,
+      );
+    }
+  }
   return shapes;
 }
 
-/** Each neuron is a dot whose size and fill follow how strongly it fires. */
+/** Each neuron is a solid dot (no transparency, so lines never show through) whose size and shade follow how strongly it fires. */
 function drawNeurons(activations: number[][], positions: Point[][]): string[] {
   return positions.flatMap((layer, layerIndex) =>
     layer.map(([x, y], neuron) => {
       const activation = activations[layerIndex]![neuron]!;
-      return `<circle cx="${x}" cy="${fmt(y)}" r="${(5 + activation * 4).toFixed(1)}" fill="${COLORS.accent}" fill-opacity="${(0.35 + activation * 0.65).toFixed(2)}" stroke="${COLORS.accent}" stroke-width="1.8"/>`;
+      const fill = mixColors(COLORS.neuronDim, COLORS.neuronBright, activation);
+      return `<circle cx="${x}" cy="${fmt(y)}" r="${(5 + activation * 4).toFixed(1)}" fill="${fill}" stroke="${COLORS.accent}" stroke-width="1.8"/>`;
     }),
   );
 }

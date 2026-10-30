@@ -11,6 +11,9 @@ export const PROFILE = {
 export const COLORS = {
   accent: "#7c5cf5",
   accentLight: "#b39dff",
+  /** Darkest and brightest shades of the accent, used to show how strongly a neuron fires. */
+  neuronDim: "#5a45c2",
+  neuronBright: "#a28bff",
   grey: "#8b949e",
 };
 

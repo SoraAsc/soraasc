@@ -6,12 +6,24 @@ export const LAYER_SIZES = [5, 7, 7, 3];
 const WEIGHT_SPREAD = 0.9;
 const BIAS_SPREAD = 0.2;
 
+/** A connection worth drawing: it leaves `from` in `layer` and arrives at `to` in the next layer. */
+export interface Connection {
+  layer: number;
+  from: number;
+  to: number;
+  /** How much signal flows through it, from 0 to 1. */
+  signal: number;
+}
+
 export interface Network {
-  /** weights[layer][to][from]: connection strength between neuron `from` and neuron `to`. */
-  weights: number[][][];
   /** activations[layer][neuron]: how strongly each neuron fires, from 0 to 1. */
   activations: number[][];
+  /** The strongest connections only, so every neuron sits on a path from an input to an output. */
+  connections: Connection[];
 }
+
+/** Each receiving neuron keeps this many of its strongest incoming connections. */
+const INCOMING_PER_NEURON = 3;
 
 /**
  * Runs one forward pass of a small random network. The inputs are my language shares, so the picture
@@ -36,10 +48,45 @@ export function runForwardPass(inputs: number[], seed: string): Network {
     activations.push(next);
   }
 
-  return { weights, activations };
+  return { activations, connections: pickConnections(weights, activations) };
 }
 
 /** Squashes any number into 0..1, so every neuron carries some signal and none looks "dead". */
 function sigmoid(value: number): number {
   return 1 / (1 + Math.exp(-2 * value));
+}
+
+/**
+ * Drawing all connections would bury the picture in faint lines that seem to lead nowhere. Instead:
+ * every neuron keeps its strongest incoming connections, and every neuron keeps at least its
+ * strongest outgoing one, so nothing is a dead end.
+ */
+function pickConnections(weights: number[][][], activations: number[][]): Connection[] {
+  const kept = new Map<string, Connection>();
+  const keep = (connection: Connection) =>
+    kept.set(`${connection.layer}:${connection.from}:${connection.to}`, connection);
+  const strongestFirst = (a: Connection, b: Connection) => b.signal - a.signal;
+
+  weights.forEach((layerWeights, layer) => {
+    const all: Connection[] = layerWeights.flatMap((incoming, to) =>
+      incoming.map((weight, from) => ({
+        layer,
+        from,
+        to,
+        signal: Math.min(1, Math.abs(weight) * activations[layer]![from]!),
+      })),
+    );
+
+    const receivers = new Set(all.map((connection) => connection.to));
+    for (const to of receivers) {
+      all.filter((c) => c.to === to).sort(strongestFirst).slice(0, INCOMING_PER_NEURON).forEach(keep);
+    }
+
+    const senders = new Set(all.map((connection) => connection.from));
+    for (const from of senders) {
+      keep(all.filter((c) => c.from === from).sort(strongestFirst)[0]!);
+    }
+  });
+
+  return [...kept.values()];
 }
