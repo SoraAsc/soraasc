@@ -32,10 +32,12 @@ pnpm typecheck
 GitHub pauses scheduled workflows in public repositories after 60 days without repository activity. If that happens,
 the Actions tab shows a notice: open the workflow and click "Enable workflow".
 
-### PROFILE_TOKEN (optional, for private contributions)
+### Private contributions
 
-The default `GITHUB_TOKEN` cannot see private contributions, so the commit count can come out lower than the real one.
+By default only public contributions are counted. To include private ones:
 
-1. GitHub > Settings > Developer settings > Personal access tokens > Tokens (classic), with the `read:user` scope.
-2. In this repository: Settings > Secrets and variables > Actions > New repository secret, named `PROFILE_TOKEN`.
-3. In the profile settings, enable "Include private contributions on my profile".
+1. In the profile settings, enable "Include private contributions on my profile". For most cases this is all you need:
+   the counts then show up for any viewer, including the default `GITHUB_TOKEN` used by the workflow.
+2. After the first workflow run, compare the commit count on the banner with your profile. If it is still lower, create a
+   classic personal access token with the `read:user` scope and save it as the repository secret `PROFILE_TOKEN`
+   (Settings > Secrets and variables > Actions). The workflow uses it automatically when it exists.
