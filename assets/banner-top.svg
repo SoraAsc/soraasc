@@ -126,7 +126,7 @@
 <rect x="16" y="280" width="126.0" height="22" rx="11" fill="none" stroke="#8b949e" stroke-opacity="0.45"/>
 <text x="79.0" y="295" font-family="'Fira Code','JetBrains Mono',ui-monospace,Menlo,Consolas,monospace" font-size="10.5" text-anchor="middle" fill="#8b949e">28 public repos</text>
 <rect x="150" y="280" width="140.4" height="22" rx="11" fill="none" stroke="#8b949e" stroke-opacity="0.45"/>
-<text x="220.2" y="295" font-family="'Fira Code','JetBrains Mono',ui-monospace,Menlo,Consolas,monospace" font-size="10.5" text-anchor="middle" fill="#8b949e">224 commits / 30d</text>
+<text x="220.2" y="295" font-family="'Fira Code','JetBrains Mono',ui-monospace,Menlo,Consolas,monospace" font-size="10.5" text-anchor="middle" fill="#8b949e">258 commits / 30d</text>
 <rect x="298.4" y="280" width="68.4" height="22" rx="11" fill="none" stroke="#8b949e" stroke-opacity="0.45"/>
 <text x="332.6" y="295" font-family="'Fira Code','JetBrains Mono',ui-monospace,Menlo,Consolas,monospace" font-size="10.5" text-anchor="middle" fill="#8b949e">top: C#</text>
 </svg>
